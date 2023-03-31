@@ -1,2 +1,2 @@
 # Training_console_chat
-1007
+Группа 1007
