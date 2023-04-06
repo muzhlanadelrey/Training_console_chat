@@ -10,6 +10,7 @@ int main()
 	Chat chat; // чат создан
 
 	chat.start(); 
+	chat.adminCreation();
 
 	while (chat.chatWork())
 	{
