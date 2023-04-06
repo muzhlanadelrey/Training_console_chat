@@ -1,4 +1,5 @@
 #include <iostream>
+#include <ctime>
 #include "Chat2.0.h"
 
 void Chat::start()
@@ -115,6 +116,47 @@ void Chat::showRegistrationMenu()
 	}
 }
 
+int getDay()
+{
+	struct tm newtime;
+	time_t now = time(0);
+	localtime_s(&newtime, &now);
+	int day = newtime.tm_mday;
+	return day;
+}
+int getMonth()
+{
+	struct tm newtime;
+	time_t now = time(0);
+	localtime_s(&newtime, &now);
+	int month = 1 + newtime.tm_mon;
+	return month;
+}
+int getYear()
+{
+	struct tm newtime;
+	time_t now = time(0);
+	localtime_s(&newtime, &now);
+	int year = 1900 + newtime.tm_year;
+	return year;
+}
+int getHour()
+{
+	struct tm newtime;
+	time_t now = time(0);
+	localtime_s(&newtime, &now);
+	int hour = newtime.tm_hour;
+	return hour;
+}
+int getMin()
+{
+	struct tm newtime;
+	time_t now = time(0);
+	localtime_s(&newtime, &now);
+	int min = newtime.tm_min;
+	return min;
+}
+
 void Chat::showMainMenu()
 {
 	char choice;
@@ -181,35 +223,63 @@ void Chat::showChat()
 	}
 }
 
-void Chat::showChatMenu()
+void Chat::showChatMenu() 
 {
 	char choice;
 
-	std::cout << "Пользователь: " << _currentUser->getUserName() << std::endl;
+	std::cout << "\nÏîëüçîâàòåëü: " << _currentUser->getUserName() << std::endl;
 
 	while (_currentUser) 
 	{
-		std::cout << "\n1 - Показать сообщения\n2 - Написать сообщение\n3 - Показать всех пользователей\n4 - Выйти из чата\n" << std::endl;
-		
-		std::cin >> choice;
-
-		switch (choice) 
+		if (_currentUser->getUserName() == "Admin") //âåðñèÿ ìåíþ äëÿ àäìèíà
 		{
-		case ('1'):
-			showChat();
-			break;
-		case ('2'):
-			addMessage();
-			break;
-		case ('3'):
-			showAllUsers();
-			break;
-		case ('4'):
-			std::cout << "\tВыход\n" << std::endl;
-			_currentUser = nullptr;
-			break;
+			std::cout << "\n1 - Ïîêàçàòü ñîîáùåíèÿ\n2 - Íàïèñàòü ñîîáùåíèå\n3 - Ïîêàçàòü âñåõ ïîëüçîâàòåëåé\n4 - (Admin) Ïîêàçàòü äàííûå âñåõ ïîëüçîâàòåëåé\n5 - Âûéòè èç ÷àòà\n" << std::endl;
+
+			std::cin >> choice;
+
+			switch (choice)
+			{
+			case ('1'):
+				showChat();
+				break;
+			case ('2'):
+				addMessage();
+				break;
+			case ('3'):
+				showAllUsers();
+				break;
+			case ('4'):
+				showAllUsersInfo();
+				break;
+			case ('5'):
+				std::cout << "\tÂûõîä\n" << std::endl;
+				_currentUser = nullptr;
+				break;
+			}
 		}
-		
+		else //âåðñèÿ ìåíþ äëÿ îáû÷íîãî ïîëüçîâàòåëÿ
+		{
+			std::cout << "\n1 - Ïîêàçàòü ñîîáùåíèÿ\n2 - Íàïèñàòü ñîîáùåíèå\n3 - Ïîêàçàòü âñåõ ïîëüçîâàòåëåé\n4 - Âûéòè èç ÷àòà\n" << std::endl;
+
+			std::cin >> choice;
+
+			switch (choice)
+			{
+			case ('1'):
+				showChat();
+				break;
+			case ('2'):
+				addMessage();
+				break;
+			case ('3'):
+				showAllUsers();
+				break;
+			case ('4'):
+				std::cout << "\tÂûõîä\n" << std::endl;
+				_currentUser = nullptr;
+				break;
+			}
+		}
 	}
 }
 
@@ -233,7 +303,7 @@ void Chat::addMessage()
 	std::string to;
 	std::string text;
 
-	std::cout << "\nВведите имя пользователя или all - отпрвить сообщение Всем:\n" << std::endl;
+	std::cout << "\nВведите имя пользователя или all - отправить сообщение Всем:\n" << std::endl;
 	std::cin >> to;
 	std::cout << "\nНапишите текст сообщения: \n" << std::endl;
 	std::cin.ignore();
@@ -254,3 +324,21 @@ void Chat::addMessage()
 	}
 }
 
+void Chat::adminCreation()
+{
+	User user = User("admin", "admin", "Admin");
+	_users.push_back(user);
+}
+
+void Chat::showAllUsersInfo()
+{
+	std::cout << "\tÏîëüçîâàòåëè:" << std::endl;
+
+	for (auto& user : Chat::_users)
+	{
+		std::cout << "Ëîãèí: " << user.getUserLogin() << " / ";
+		std::cout << "Ïàðîëü: " << user.getUserPassword() << " / ";
+		std::cout << "Èìÿ: "<<user.getUserName();
+		std::cout << std::endl;
+	}
+}
