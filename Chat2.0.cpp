@@ -231,9 +231,9 @@ void Chat::showChatMenu()
 
 	while (_currentUser) 
 	{
-		if (_currentUser->getUserName() == "Admin") //âåðñèÿ ìåíþ äëÿ àäìèíà
+		if (_currentUser->getUserName() == "Admin") //версия меню для админа
 		{
-			std::cout << "\n1 - Ïîêàçàòü ñîîáùåíèÿ\n2 - Íàïèñàòü ñîîáùåíèå\n3 - Ïîêàçàòü âñåõ ïîëüçîâàòåëåé\n4 - (Admin) Ïîêàçàòü äàííûå âñåõ ïîëüçîâàòåëåé\n5 - Âûéòè èç ÷àòà\n" << std::endl;
+			std::cout << "\n1 - Показать сообщения\n2 - Написать сообщение\n3 - Показать всех пользователей\n4 - (Admin) Показать данные всех пользователей\n5 - Выйти из чата\n" << std::endl;
 
 			std::cin >> choice;
 
@@ -252,14 +252,14 @@ void Chat::showChatMenu()
 				showAllUsersInfo();
 				break;
 			case ('5'):
-				std::cout << "\tÂûõîä\n" << std::endl;
+				std::cout << "\tВыход\n" << std::endl;
 				_currentUser = nullptr;
 				break;
 			}
 		}
-		else //âåðñèÿ ìåíþ äëÿ îáû÷íîãî ïîëüçîâàòåëÿ
+		else //версия меню для обычного пользователя
 		{
-			std::cout << "\n1 - Ïîêàçàòü ñîîáùåíèÿ\n2 - Íàïèñàòü ñîîáùåíèå\n3 - Ïîêàçàòü âñåõ ïîëüçîâàòåëåé\n4 - Âûéòè èç ÷àòà\n" << std::endl;
+			std::cout << "\n1 - Показать сообщения\n2 - Написать сообщение\n3 - Показать всех пользователей\n4 - Выйти из чата\n" << std::endl;
 
 			std::cin >> choice;
 
@@ -275,7 +275,7 @@ void Chat::showChatMenu()
 				showAllUsers();
 				break;
 			case ('4'):
-				std::cout << "\tÂûõîä\n" << std::endl;
+				std::cout << "\tВыход\n" << std::endl;
 				_currentUser = nullptr;
 				break;
 			}
